@@ -1,0 +1,11 @@
+name: columns_mysite
+---
+
+SilverstripeColumnsPageExtension:
+  page_types_that_use_the_default_sidebar:
+    - Page
+    - BlogPost
+  page_types_that_use_the_second_column:
+    - Page
+    - ErrorPage
+    - Blog

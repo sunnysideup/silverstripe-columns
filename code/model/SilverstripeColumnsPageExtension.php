@@ -42,11 +42,9 @@ class SilverstripeColumnsPageExtension extends DataExtension
         'SidebarImage' => 'Image to show up in the sidebar instead of content.'
     ];
 
-    private static $page_types_that_use_the_default_sidebar = [
-    ];
+    private static $page_types_that_use_the_default_sidebar = [];
 
-    private static $page_types_that_use_the_second_column = [
-    ];
+    private static $page_types_that_use_the_second_column = [];
 
     public function updateCMSFields(FieldList $fields)
     {
