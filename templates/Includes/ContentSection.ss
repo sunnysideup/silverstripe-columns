@@ -1,0 +1,42 @@
+<div class="clearfix $NumberOfColumns" id="MainDetails">
+
+    <main>
+        <div class="typography content-padding">
+            <div id="MainContentSection">
+                <h1 id="PageTitle">$Title</h1>
+                $Content
+            </div>
+            <% include FormSection %>
+            <% include PageCommentSection %>
+        </div>
+    </main>
+
+    <% if $HasSideBar %>
+    <aside id="Sidebar" >
+        <div class="typography content-padding">
+            <% include Sidebar %>
+            <% if $MySidebarImage %>
+                <div id="MySidebarImage">
+                    <img src="$MySidebarImage.Link" alt="$MySidebarImage.Title" />
+                </div>
+            <% end_if %>
+        </div>
+    </aside>
+    <% end_if %>
+
+
+
+    <% if $HasSecondColumn %>
+    <section id="SecondColumn">
+        <div class="typography content-padding">
+            $MySecondColumnContent
+        </div>
+    </section>
+    <% end_if %>
+
+    <% if $HasFullWidthContent %>
+    <section class="clearfix full-width-content row">
+        $FullWidthContent
+    </section>
+    <% end_if %>
+</div>

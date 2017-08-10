@@ -21,7 +21,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
     private static $casting = [
         'MyDefaultSidebarContent' => 'HTMLText',
-        'MySecondColumnContent' => 'HTMLText'
+        'MySecondColumnContent' => 'HTMLText',
         'FullWidthContent' => 'HTMLText',
         'SummaryContent' => 'HTMLText'
     ];
@@ -30,6 +30,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
         'Summary' => 'Page Summary',
         'SecondColumn' => 'Second content section',
         'DefaultSidebarContent' => 'Sidebar content',
+        'SummaryImage' => 'Image for Summaries',
         'SidebarImage' => 'Sidebar Image'
     ];
 
@@ -50,12 +51,11 @@ class SilverstripeColumnsPageExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         $fieldLabels = $this->owner->FieldLabels();
-        $fieldLabelsRight = $this->Config()->get('field_labels_right');
+        $fieldLabelsRight = Config::inst()->get('SilverstripeColumnsPageExtension', 'field_labels_right');
         $tabTitleSummary = _t('SilverstripeColumnsPageExtension.SUMMARY_TAB', 'Summary');
         $tabTitleContent = _t('SilverstripeColumnsPageExtension.ADDITIONAL_CONTENT_TAB', 'MoreContent');
-        $fields = parent::getCMSFields();
         $fields->addFieldsToTab(
-            'Root' . $tabTitleSummary,
+            'Root.' . $tabTitleSummary,
             [
                 HTMLEditorField::create(
                     'Summary',
@@ -70,7 +70,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
         );
         if($this->owner->UseSecondColumn()) {
             $fields->addFieldsToTab(
-                'Root' . $tabTitleContent,
+                'Root.' . $tabTitleContent,
                 [
                     HTMLEditorField::create(
                         'SecondColumn',
@@ -82,7 +82,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
         }
         if($this->owner->UseDefaultSidebarContent()) {
             $fields->addFieldsToTab(
-                'Root' . $tabTitleContent,
+                'Root.' . $tabTitleContent,
                 [
                     HTMLEditorField::create(
                         'DefaultSidebarContent',
@@ -113,7 +113,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
             }
         }
 
-        $testArray = $this->Config()->get('page_types_that_use_the_default_sidebar');
+        $testArray = Config::inst()->get('SilverstripeColumnsPageExtension', 'page_types_that_use_the_default_sidebar');
         if(count($testArray) === 0) {
 
             return true;
@@ -138,7 +138,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
             }
         }
 
-        $testArray = $this->Config()->get('page_types_that_use_the_second_column');
+        $testArray = Config::inst()->get('SilverstripeColumnsPageExtension','page_types_that_use_the_second_column');
         if(count($testArray) === 0) {
             return true;
         } else {
@@ -161,14 +161,14 @@ class SilverstripeColumnsPageExtension extends DataExtension
             }
         }
 
-        if($this->SidebarImageID) {
+        if($this->owner->SidebarImageID) {
             $image = $this->owner->SidebarImage();
             if($image && $image->exists()) {
                 return $image;
             }
         }
-        $parent = $this->Parent();
-        if($parent && $parent->exists() and $parent instanceof SiteTree) {
+        $parent = $this->owner->Parent();
+        if($parent && $parent->exists() && $parent instanceof SiteTree) {
             return $parent->MySidebarImage();
         }
 
@@ -187,7 +187,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
-        return $this->DefaultSidebarContent;
+        return $this->owner->DefaultSidebarContent;
     }
 
     /**
@@ -197,12 +197,12 @@ class SilverstripeColumnsPageExtension extends DataExtension
     function getMySecondColumnContent()
     {
         if($this->owner->hasMethod('MySecondColumnContentOverloaded')) {
-            $v = $this->owner->MyDefaultSidebarContentOverloaded();
+            $v = $this->owner->MySecondColumnContentOverloaded();
             if($v !== null) {
                 return $v;
             }
         }
-        return $this->DefaultSidebarContent;
+        return $this->owner->SecondColumn;
     }
 
     /**
@@ -217,7 +217,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
-        return $this->renderWith('FullWidthContent');
+        return $this->owner->renderWith('FullWidthContent');
     }
 
     /**
@@ -232,7 +232,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
-        return $this->renderWith('SummaryContent');
+        return $this->owner->renderWith('SummaryContent');
     }
 
 }

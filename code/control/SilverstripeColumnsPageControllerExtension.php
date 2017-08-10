@@ -20,7 +20,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
                 return $v;
             }
         }
-        if($this->owner->getFullWidthContent()) {
+        if($this->owner->owner->getFullWidthContent()) {
             return true;
         }
     }
@@ -39,10 +39,10 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         if(
             (
                 $this->owner->UseDefaultSideBarContent() &&
-                strlen($this->getMyDefaultSidebarContent()) > 17
+                strlen($this->owner->getMyDefaultSidebarContent()) > 17
             )
             ||
-            $this->MySidebarImage()
+            $this->owner->MySidebarImage()
         ) {
             return true;
         }
@@ -63,7 +63,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         if(
             (
                 $this->owner->UseSecondColumn() &&
-                strlen($this->getMySecondColumnContent()) > 17
+                strlen($this->owner->getMySecondColumnContent()) > 17
             )
         ) {
             return true;
@@ -84,10 +84,10 @@ class SilverstripeColumnsPageControllerExtension extends Extension
             }
         }
         $count = 1;
-        if($this->HasSideBar()) {
+        if($this->owner->HasSideBar()) {
             $count++;
         }
-        if($this->HasSecondColumn()) {
+        if($this->owner->HasSecondColumn()) {
             $count++;
         }
         if($asClassName) {
@@ -139,7 +139,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
                 return $v;
             }
         }
-        return Page::get()->filter(array('ParentID' => $this->ID, 'ShowInMenus' => 1));
+        return Page::get()->filter(array('ParentID' => $this->owner->ID, 'ShowInMenus' => 1));
     }
 
     /**
@@ -154,10 +154,10 @@ class SilverstripeColumnsPageControllerExtension extends Extension
                 return $v;
             }
         }
-        if($this->ParentID) {
+        if($this->owner->ParentID) {
             return Page::get()
-                ->filter(array('ParentID' => $this->ParentID, 'ShowInMenus' => 1))
-                ->exclude(array('ID' => $this->ID));
+                ->filter(array('ParentID' => $this->owner->ParentID, 'ShowInMenus' => 1))
+                ->exclude(array('ID' => $this->owner->ID));
         }
     }
 
