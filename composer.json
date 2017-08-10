@@ -1,0 +1,28 @@
+{
+    "name": "sunnysideup/columns",
+    "type": "silverstripe-module",
+    "description": "Adds the ability to add several content columns.",
+    "keywords": [
+        "Silverstripe-CMS",
+        "CMS",
+        "Silverstripe",
+        "Columns",
+        "Contentblocks",
+        "Content blocks",
+        "Page Design"
+    ],
+    "license": "Sunny Side Up (BSD-3-Clause and CUSTOM)",
+    "authors": [
+        {
+            "name": "Nicolaas Francken",
+            "email": "modules@sunnysideup.co.nz",
+            "role": "lead developer"
+        }
+    ],
+    "require": {
+        "silverstripe/cms": "~3.1"
+    },
+    "extra": {
+        "installer-name": "columns"
+    }
+}

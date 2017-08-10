@@ -1,0 +1,9 @@
+name: columns
+---
+Page:
+  extensions:
+    - SilverstripeColumnsPageExtension
+
+Page_Controller:
+  extensions:
+    - SilverstripeColumnsPageControllerExtension
