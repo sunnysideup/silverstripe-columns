@@ -10,7 +10,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
 {
 
     /**
-     * @return Boolean
+     * @return bool
      */
     function HasFullWidthContent()
     {
@@ -25,6 +25,9 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         }
     }
 
+    /**
+     * @return bool
+     */
     function HasSideBar()
     {
         if($this->owner->hasMethod('HasSideBarOverloaded')) {
@@ -46,6 +49,9 @@ class SilverstripeColumnsPageControllerExtension extends Extension
     }
 
 
+    /**
+     * @return bool
+     */
     function HasSecondColumn()
     {
         if($this->owner->hasMethod('HasSecondColumnOverloaded')) {
