@@ -233,4 +233,10 @@ class SilverstripeColumnsPageExtension extends DataExtension
         return $this->owner->renderWith('SummaryContent');
     }
 
+
+    function ChildrenShowInMenu()
+    {
+        return Page::get()
+            ->filter(['ParentID' => $this->owner->ID, 'ShowInMenus' => 1]);
+    }
 }
