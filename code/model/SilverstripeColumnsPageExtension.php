@@ -109,29 +109,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
     }
 
     /**
-     * @return boolean
-     */
-    function UseSecondColumn()
-    {
-        if($this->owner->hasMethod('UseSecondColumnOverloaded')) {
-            $v = $this->owner->UseSecondColumnOverloaded();
-            if($v !== null) {
-                return $v;
-            }
-        }
-
-        $testArray = Config::inst()->get('SilverstripeColumnsPageExtension','page_types_that_use_the_second_column');
-        if(count($testArray) === 0) {
-            return true;
-        } else {
-            if(in_array($this->owner->ClassName, $testArray)) {
-                return true;
-            }
-            return false;
-        }
-    }
-
-    /**
      * @return Image | null
      */
     function MySidebarImage()
@@ -170,21 +147,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
             }
         }
         return $this->owner->DefaultSidebarContent;
-    }
-
-    /**
-     *
-     * @return string (HTML)
-     */
-    function getMySecondColumnContent()
-    {
-        if($this->owner->hasMethod('MySecondColumnContentOverloaded')) {
-            $v = $this->owner->MySecondColumnContentOverloaded();
-            if($v !== null) {
-                return $v;
-            }
-        }
-        return $this->owner->SecondColumn;
     }
 
     /**

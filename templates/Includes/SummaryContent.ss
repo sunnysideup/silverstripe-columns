@@ -1,4 +1,4 @@
-<div class="summary-holder">
+<article class="summary-holder">
     <a href="$Link"><img src="$SummaryImage.Link" /></a>
     <a href="$Link">$MenuTitle</a>
-</div>
+</article>
