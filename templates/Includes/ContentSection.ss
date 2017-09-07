@@ -1,4 +1,6 @@
-<div class="clearfix $NumberOfColumns" id="MainDetails">
+<%-- Please theme this template --%>
+
+<div class="clearfix $NumberOfColumns">
 
     <main>
         <div class="typography content-padding">
@@ -6,8 +8,6 @@
                 <h1 id="PageTitle">$Title</h1>
                 $Content
             </div>
-            <% include FormSection %>
-            <% include PageCommentSection %>
         </div>
     </main>
 
@@ -24,15 +24,6 @@
     </aside>
     <% end_if %>
 
-
-
-    <% if $HasSecondColumn %>
-    <section id="SecondColumn">
-        <div class="typography content-padding">
-            $MySecondColumnContent
-        </div>
-    </section>
-    <% end_if %>
 
     <% if $HasFullWidthContent %>
     <section class="clearfix full-width-content row">

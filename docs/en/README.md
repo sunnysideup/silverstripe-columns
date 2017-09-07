@@ -13,7 +13,6 @@ And to your Page_Controller class:
 
  - HasFullWidthContent
  - HasSideBarOverloaded
- - HasSecondColumnOverloaded
  - NumberOfColumnsOverloaded
  - RecentlyUpdatedOverloaded
  - InThisSectionOverloaded
