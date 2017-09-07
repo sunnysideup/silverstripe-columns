@@ -10,7 +10,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
 {
     private static $db = [
         'Summary' => 'HTMLVarchar(255)',
-        'SecondColumn' => 'HTMLText',
         'DefaultSidebarContent' => 'HTMLText'
     ];
 
@@ -21,14 +20,12 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
     private static $casting = [
         'MyDefaultSidebarContent' => 'HTMLText',
-        'MySecondColumnContent' => 'HTMLText',
         'FullWidthContent' => 'HTMLText',
         'SummaryContent' => 'HTMLText'
     ];
 
     private static $field_labels = [
         'Summary' => 'Page Summary',
-        'SecondColumn' => 'Second content section',
         'DefaultSidebarContent' => 'Sidebar content',
         'SummaryImage' => 'Image for Summaries',
         'SidebarImage' => 'Sidebar Image'
@@ -36,7 +33,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
     private static $field_labels_right = [
         'Summary' => 'A summary of the page for use on other pages.',
-        'SecondColumn' => 'The second column is basically an extension of the primary content field',
         'DefaultSidebarContent' => 'The sidebar show up to the right of the main content. It is usually for something like DID YOU KNOW? or CONTACT DETAILS.',
         'SummaryImage' => 'Image used to show a link to this page together with the summary of the page provided.',
         'SidebarImage' => 'Image to show up in the sidebar instead of content.'
@@ -66,18 +62,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 )->setRightTitle($fieldLabelsRight['SummaryImage'])
             ]
         );
-        if($this->owner->UseSecondColumn()) {
-            $fields->addFieldsToTab(
-                'Root.' . $tabTitleContent,
-                [
-                    HTMLEditorField::create(
-                        'SecondColumn',
-                        $fieldLabels['SecondColumn']
-                    )->setRows(20)
-                    ->setRightTitle($fieldLabelsRight['SecondColumn'])
-                ]
-            );
-        }
         if($this->owner->UseDefaultSidebarContent()) {
             $fields->addFieldsToTab(
                 'Root.' . $tabTitleContent,

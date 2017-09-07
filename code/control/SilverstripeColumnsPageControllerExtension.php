@@ -48,28 +48,6 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         }
     }
 
-
-    /**
-     * @return bool
-     */
-    function HasSecondColumn()
-    {
-        if($this->owner->hasMethod('HasSecondColumnOverloaded')) {
-            $v = $this->owner->HasSecondColumnOverloaded();
-            if($v !== null) {
-                return $v;
-            }
-        }
-        if(
-            (
-                $this->owner->UseSecondColumn() &&
-                strlen($this->owner->getMySecondColumnContent()) > 17
-            )
-        ) {
-            return true;
-        }
-    }
-
     /**
      * @param boolean $asClassName
      *
@@ -85,9 +63,6 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         }
         $count = 1;
         if($this->owner->HasSideBar()) {
-            $count++;
-        }
-        if($this->owner->HasSecondColumn()) {
             $count++;
         }
         if($asClassName) {
