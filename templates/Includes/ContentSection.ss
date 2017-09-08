@@ -1,6 +1,6 @@
 <%-- Please theme this template --%>
 
-<div class="clearfix $NumberOfColumns">
+<div class="clearfix $NumberOfColumns" id="content-area">
 
     <main>
         <div class="typography content-padding">
