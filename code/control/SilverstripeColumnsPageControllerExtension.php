@@ -9,6 +9,10 @@
 class SilverstripeColumnsPageControllerExtension extends Extension
 {
 
+    private static $allowed_actions = [
+        'myspecificpagemenuitems' => true
+    ];
+
     /**
      * @return bool
      */
@@ -104,6 +108,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
     }
 
     /**
+     *  Children Menu Items
      * @return null | DataList
      */
     function InThisSection()
@@ -114,11 +119,12 @@ class SilverstripeColumnsPageControllerExtension extends Extension
                 return $v;
             }
         }
-        return Page::get()->filter(array('ParentID' => $this->owner->ID, 'ShowInMenus' => 1));
+        
+        return $this->owner->ChildrenShowInMenu();
     }
 
     /**
-     * Siblings
+     * Sibling Menu Items
      * @return null | DataList
      */
     function AlsoSee()
@@ -130,10 +136,33 @@ class SilverstripeColumnsPageControllerExtension extends Extension
             }
         }
         if($this->owner->ParentID) {
-            return Page::get()
-                ->filter(array('ParentID' => $this->owner->ParentID, 'ShowInMenus' => 1))
-                ->exclude(array('ID' => $this->owner->ID));
+            $parent = DataObject::get_one('Page', ['ParentID' => $this->owner->ParentID]);
+            $list = $parent->ChildrenShowInMenu();
+            $list->removeByID($this->owner->ID);
+
+            return $list;
+
         }
     }
+
+    /**
+     * returns relevant menus items for
+     * @param  SS_Request
+     * @return string (html)
+     */
+    function myspecificpagemenuitems($request)
+    {
+        if($this->owner->hasMethod('MySpecificPageMenuItemsOverloaded')) {
+            $v = $this->owner->MySpecificPageMenuItemsOverloaded();
+            if($v !== null) {
+                return $v;
+            }
+        }
+        $id = intval($this->owner->request->param('ID'));
+        $page = Page::get()->byID($id);
+
+        return $page->renderWith('MyMenuItems');
+    }
+
 
 }

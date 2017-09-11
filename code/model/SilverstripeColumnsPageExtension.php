@@ -179,10 +179,53 @@ class SilverstripeColumnsPageExtension extends DataExtension
         return $this->owner->renderWith('SummaryContent');
     }
 
+    private static $_children_show_in_menu = [];
 
-    function ChildrenShowInMenu()
+    function ChildrenShowInMenu($root = false)
     {
-        return Page::get()
-            ->filter(['ParentID' => $this->owner->ID, 'ShowInMenus' => 1]);
+        $key = $this->owner->ID. '_'.($root ? 'true' : 'false');
+        if(!isset(self::$_children_show_in_menu[$key])) {
+            if($root) {
+                $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => 0]);
+                foreach($list as $page) {
+                    if(! $page->canView()) {
+                        $list->remove($page);
+                    }
+                }
+            } else {
+                $list = $this->owner->Children();
+                foreach($list as $page) {
+                    if(! $page->ShowInMenus) {
+                        $list->remove($page);
+                    }
+                }
+            }
+            self::$_children_show_in_menu[$key] = $list;
+        }
+        return self::$_children_show_in_menu[$key];
     }
+
+
+    function MyMenuItems()
+    {
+        //first stop: children ...
+        $parent = $this->owner;
+        $dataSet = false;
+        while($parent && $dataSet === false) {
+            $dataSet = $parent->ChildrenShowInMenu();
+            if($dataSet->count() === 0) {
+                $dataSet = false;
+            }
+            if($dataSet === false) {
+                $parent = Page::get()->byID($parent->ParentID);
+            }
+        }
+        if($dataSet === false) {
+            $dataSet = $this->ChildrenShowInMenu(true);
+        }
+        return $dataSet;
+
+    }
+
+
 }
