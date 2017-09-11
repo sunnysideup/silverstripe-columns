@@ -119,7 +119,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
                 return $v;
             }
         }
-        
+
         return $this->owner->ChildrenShowInMenu();
     }
 
@@ -138,7 +138,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         if($this->owner->ParentID) {
             $parent = DataObject::get_one('Page', ['ParentID' => $this->owner->ParentID]);
             $list = $parent->ChildrenShowInMenu();
-            $list->removeByID($this->owner->ID);
+            $list->remove($this->owner);
 
             return $list;
 
@@ -160,8 +160,12 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         }
         $id = intval($this->owner->request->param('ID'));
         $page = Page::get()->byID($id);
-
-        return $page->renderWith('MyMenuItems');
+        if(!$page) {
+            $page = DataObject::get_one('Page', ['ParentID' => 0]);
+        }
+        if($page) {
+            return $page->renderWith('MyMenuItems');
+        }
     }
 
 

@@ -183,6 +183,12 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
     function ChildrenShowInMenu($root = false)
     {
+        if($this->owner->hasMethod('ChildrenShowInMenuOverloaded')) {
+            $v = $this->owner->ChildrenShowInMenuOverloaded();
+            if($v !== null) {
+                return $v;
+            }
+        }
         $key = $this->owner->ID. '_'.($root ? 'true' : 'false');
         if(!isset(self::$_children_show_in_menu[$key])) {
             if($root) {
@@ -208,6 +214,12 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
     function MyMenuItems()
     {
+        if($this->owner->hasMethod('MyMenuItemsOverloaded')) {
+            $v = $this->owner->MyMenuItemsOverloaded();
+            if($v !== null) {
+                return $v;
+            }
+        }
         //first stop: children ...
         $parent = $this->owner;
         $dataSet = false;
@@ -224,8 +236,36 @@ class SilverstripeColumnsPageExtension extends DataExtension
             $dataSet = $this->ChildrenShowInMenu(true);
         }
         return $dataSet;
-
     }
 
+    function MyMenuItemsParentPage()
+    {
+        $children = $this->MyMenuItems();
+        if($children) {
+            if($child = $children->first()) {
+                $page = Page::get()->byID($child->ParentID);
+                if($page && $page->ShowInMenus && $page->canView()) {
+                    return $page;
+                }
+            }
+        }
+    }
+
+    function MyMenuItemsParentLink()
+    {
+        $parent = $this->MyMenuItemsParentPage();
+        if($parent) {
+            return $parent->MyMenuItemsMenuLink($parent->ParentID);
+        }
+        return $this->MyMenuItemsMenuLink(0);
+    }
+
+    function MyMenuItemsMenuLink($id = null)
+    {
+        if($id === null) {
+            $id = $this->owner->ID;
+        }
+        return $this->owner->Link().'myspecificpagemenuitems/'.$id.'/';
+    }
 
 }
