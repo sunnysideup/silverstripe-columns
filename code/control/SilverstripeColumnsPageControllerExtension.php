@@ -159,14 +159,23 @@ class SilverstripeColumnsPageControllerExtension extends Extension
             }
         }
         $id = intval($this->owner->request->param('ID'));
-        $page = Page::get()->byID($id);
-        if(!$page) {
-            $page = DataObject::get_one('Page', ['ParentID' => 0]);
-        }
-        if($page) {
-            return $page->renderWith('MyMenuItems');
-        }
+        $this->owner->setShowMenuItemsFor($id);
+        return ArrayData::create(
+            [
+                'MyMenuItems' => $this->owner->MyMenuItems(),
+                'MyMenuItemsParentPage' => $this->owner->MyMenuItemsParentPage(),
+                'MyMenuItemsParentLink' => $this->owner->MyMenuItemsParentLink()
+            ]
+        )
+        ->renderWith('MyMenuItems');
     }
 
+
+    function IsNotHome()
+    {
+        $link = $this->owner->Link();
+
+        return  $link === 'home' || $link = '/';
+    }
 
 }

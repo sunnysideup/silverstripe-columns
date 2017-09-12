@@ -181,36 +181,43 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
     private static $_children_show_in_menu = [];
 
+    private $showMenuItemsFor = null;
+
+    public function setShowMenuItemsFor($showMenuItemsFor) {
+        $showMenuItemsFor = intval($showMenuItemsFor);
+        $this->showMenuItemsFor = $showMenuItemsFor;
+    }
+
     function ChildrenShowInMenu($root = false)
     {
-        if($this->owner->hasMethod('ChildrenShowInMenuOverloaded')) {
-            $v = $this->owner->ChildrenShowInMenuOverloaded();
-            if($v !== null) {
-                return $v;
-            }
-        }
         $key = $this->owner->ID. '_'.($root ? 'true' : 'false');
         if(!isset(self::$_children_show_in_menu[$key])) {
-            if($root) {
-                $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => 0]);
-                foreach($list as $page) {
-                    if(! $page->canView()) {
-                        $list->remove($page);
-                    }
+            if($this->owner->hasMethod('ChildrenShowInMenuOverloaded')) {
+                $v = $this->owner->ChildrenShowInMenuOverloaded();
+                if($v instanceof ArrayList) {
+                    self::$_children_show_in_menu[$key] = $v;
                 }
             } else {
-                $list = $this->owner->Children();
-                foreach($list as $page) {
-                    if(! $page->ShowInMenus) {
-                        $list->remove($page);
+                if($root) {
+                    $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => 0]);
+                    foreach($list as $page) {
+                        if(! $page->canView()) {
+                            $list->remove($page);
+                        }
+                    }
+                } else {
+                    $list = $this->owner->Children();
+                    foreach($list as $page) {
+                        if(! $page->ShowInMenus) {
+                            $list->remove($page);
+                        }
                     }
                 }
+                self::$_children_show_in_menu[$key] = $list;
             }
-            self::$_children_show_in_menu[$key] = $list;
         }
         return self::$_children_show_in_menu[$key];
     }
-
 
     function MyMenuItems()
     {
@@ -223,17 +230,27 @@ class SilverstripeColumnsPageExtension extends DataExtension
         //first stop: children ...
         $parent = $this->owner;
         $dataSet = false;
-        while($parent && $dataSet === false) {
-            $dataSet = $parent->ChildrenShowInMenu();
-            if($dataSet->count() === 0) {
-                $dataSet = false;
+        if($this->showMenuItemsFor !== null) {
+            if($this->showMenuItemsFor) {
+                $page = Page::get()->byID($this->showMenuItemsFor);
+                $dataSet = $page->ChildrenShowInMenu();
+            } else {
+                $dataSet = $this->ChildrenShowInMenu(true);
+            }
+
+        } else {
+            while($parent && $dataSet === false) {
+                $dataSet = $parent->ChildrenShowInMenu();
+                if($dataSet->count() === 0) {
+                    $dataSet = false;
+                }
+                if($dataSet === false) {
+                    $parent = Page::get()->byID($parent->ParentID);
+                }
             }
             if($dataSet === false) {
-                $parent = Page::get()->byID($parent->ParentID);
+                $dataSet = $this->ChildrenShowInMenu(true);
             }
-        }
-        if($dataSet === false) {
-            $dataSet = $this->ChildrenShowInMenu(true);
         }
         return $dataSet;
     }
@@ -265,7 +282,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
         if($id === null) {
             $id = $this->owner->ID;
         }
-        return $this->owner->Link().'myspecificpagemenuitems/'.$id.'/';
+        return Controller::curr()->Link().'myspecificpagemenuitems/'.$id.'/';
     }
 
 }
