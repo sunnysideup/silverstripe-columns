@@ -5,7 +5,7 @@
     <main>
         <div class="typography content-padding">
             <div id="MainContentSection">
-                <h1 id="PageTitle">$Title</h1>
+                <h1 id="main-page-title">$Title</h1>
                 $Content
             </div>
         </div>
