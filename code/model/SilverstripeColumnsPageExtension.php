@@ -44,8 +44,8 @@ class SilverstripeColumnsPageExtension extends DataExtension
         $fieldLabelsRight = Config::inst()->get('SilverstripeColumnsPageExtension', 'field_labels_right');
         $tabTitleSummary = _t('SilverstripeColumnsPageExtension.SUMMARY_TAB', 'Summary');
         $tabTitleContent = _t('SilverstripeColumnsPageExtension.ADDITIONAL_CONTENT_TAB', 'MoreContent');
-        if($this->owner->UseSummaries())
-        $fields->addFieldsToTab(
+        if ($this->owner->UseSummaries()) {
+            $fields->addFieldsToTab(
             'Root.' . $tabTitleSummary,
             [
                 HTMLEditorField::create(
@@ -59,7 +59,8 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 )->setRightTitle($fieldLabelsRight['SummaryImage'])
             ]
         );
-        if($this->owner->UseDefaultSidebarContent()) {
+        }
+        if ($this->owner->UseDefaultSidebarContent()) {
             $fields->addFieldsToTab(
                 'Root.' . $tabTitleContent,
                 [
@@ -83,11 +84,11 @@ class SilverstripeColumnsPageExtension extends DataExtension
     /**
      * @return boolean
      */
-    function UseDefaultSideBarContent()
+    public function UseDefaultSideBarContent()
     {
-        if($this->owner->hasMethod('UseDefaultSideBarContentOverloaded')) {
+        if ($this->owner->hasMethod('UseDefaultSideBarContentOverloaded')) {
             $v = $this->owner->UseDefaultSideBarContentOverloaded();
-            if($v !== null) {
+            if ($v !== null) {
                 return $v;
             }
         }
@@ -99,11 +100,11 @@ class SilverstripeColumnsPageExtension extends DataExtension
     /**
      * @return boolean
      */
-    function UseSummaries()
+    public function UseSummaries()
     {
-        if($this->owner->hasMethod('UseSummariesOverloaded')) {
+        if ($this->owner->hasMethod('UseSummariesOverloaded')) {
             $v = $this->owner->UseSummariesOverloaded();
-            if($v !== null) {
+            if ($v !== null) {
                 return $v;
             }
         }
@@ -114,23 +115,23 @@ class SilverstripeColumnsPageExtension extends DataExtension
     /**
      * @return Image | null
      */
-    function MySidebarImage()
+    public function MySidebarImage()
     {
-        if($this->owner->hasMethod('MySidebarImageOverloaded')) {
+        if ($this->owner->hasMethod('MySidebarImageOverloaded')) {
             $v = $this->owner->MySidebarImageOverloaded();
-            if($v !== null) {
+            if ($v !== null) {
                 return $v;
             }
         }
 
-        if($this->owner->SidebarImageID) {
+        if ($this->owner->SidebarImageID) {
             $image = $this->owner->SidebarImage();
-            if($image && $image->exists()) {
+            if ($image && $image->exists()) {
                 return $image;
             }
         }
         $parent = $this->owner->Parent();
-        if($parent && $parent->exists() && $parent instanceof SiteTree) {
+        if ($parent && $parent->exists() && $parent instanceof SiteTree) {
             return $parent->MySidebarImage();
         }
 
@@ -141,11 +142,11 @@ class SilverstripeColumnsPageExtension extends DataExtension
      *
      * @return string (HTML)
      */
-    function getMyDefaultSidebarContent()
+    public function getMyDefaultSidebarContent()
     {
-        if($this->owner->hasMethod('MyDefaultSidebarContentOverloaded')) {
+        if ($this->owner->hasMethod('MyDefaultSidebarContentOverloaded')) {
             $v = $this->owner->MyDefaultSidebarContentOverloaded();
-            if($v !== null) {
+            if ($v !== null) {
                 return $v;
             }
         }
@@ -156,11 +157,11 @@ class SilverstripeColumnsPageExtension extends DataExtension
      *
      * @return string (HTML)
      */
-    function getFullWidthContent()
+    public function getFullWidthContent()
     {
-        if($this->owner->hasMethod('FullWidthContentOverloaded')) {
+        if ($this->owner->hasMethod('FullWidthContentOverloaded')) {
             $v = $this->owner->FullWidthContentOverloaded();
-            if($v !== null) {
+            if ($v !== null) {
                 return $v;
             }
         }
@@ -171,11 +172,11 @@ class SilverstripeColumnsPageExtension extends DataExtension
      *
      * @return string (HTML)
      */
-    function getSummaryContent()
+    public function getSummaryContent()
     {
-        if($this->owner->hasMethod('SummaryContentOverloaded')) {
+        if ($this->owner->hasMethod('SummaryContentOverloaded')) {
             $v = $this->owner->SummaryContentOverloaded();
-            if($v !== null) {
+            if ($v !== null) {
                 return $v;
             }
         }
@@ -186,32 +187,33 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
     private $showMenuItemsFor = null;
 
-    public function setShowMenuItemsFor($showMenuItemsFor) {
+    public function setShowMenuItemsFor($showMenuItemsFor)
+    {
         $showMenuItemsFor = intval($showMenuItemsFor);
         $this->showMenuItemsFor = $showMenuItemsFor;
     }
 
-    function ChildrenShowInMenu($root = false)
+    public function ChildrenShowInMenu($root = false)
     {
         $key = $this->owner->ID. '_'.($root ? 'true' : 'false');
-        if(!isset(self::$_children_show_in_menu[$key])) {
-            if($this->owner->hasMethod('ChildrenShowInMenuOverloaded')) {
+        if (!isset(self::$_children_show_in_menu[$key])) {
+            if ($this->owner->hasMethod('ChildrenShowInMenuOverloaded')) {
                 $v = $this->owner->ChildrenShowInMenuOverloaded();
-                if($v instanceof ArrayList) {
+                if ($v instanceof ArrayList) {
                     self::$_children_show_in_menu[$key] = $v;
                 }
             } else {
-                if($root) {
+                if ($root) {
                     $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => 0]);
-                    foreach($list as $page) {
-                        if(! $page->canView()) {
+                    foreach ($list as $page) {
+                        if (! $page->canView()) {
                             $list->remove($page);
                         }
                     }
                 } else {
                     $list = $this->owner->Children();
-                    foreach($list as $page) {
-                        if(! $page->ShowInMenus) {
+                    foreach ($list as $page) {
+                        if (! $page->ShowInMenus) {
                             $list->remove($page);
                         }
                     }
@@ -222,70 +224,69 @@ class SilverstripeColumnsPageExtension extends DataExtension
         return self::$_children_show_in_menu[$key];
     }
 
-    function MyMenuItems()
+    public function MyMenuItems()
     {
-        if($this->owner->hasMethod('MyMenuItemsOverloaded')) {
+        if ($this->owner->hasMethod('MyMenuItemsOverloaded')) {
             $v = $this->owner->MyMenuItemsOverloaded();
-            if($v !== null) {
+            if ($v !== null) {
                 return $v;
             }
         }
         //first stop: children ...
         $parent = $this->owner;
         $dataSet = false;
-        if($this->showMenuItemsFor !== null) {
-            if($this->showMenuItemsFor) {
+        if ($this->showMenuItemsFor !== null) {
+            if ($this->showMenuItemsFor) {
                 $page = Page::get()->byID($this->showMenuItemsFor);
                 $dataSet = $page->ChildrenShowInMenu();
             } else {
                 $dataSet = $this->ChildrenShowInMenu(true);
             }
-
         } else {
-            while($parent && $dataSet === false) {
+            while ($parent && $dataSet === false) {
                 $dataSet = $parent->ChildrenShowInMenu();
-                if($dataSet->count() === 0) {
+                if ($dataSet->count() === 0) {
                     $dataSet = false;
                 }
-                if($dataSet === false) {
+                if ($dataSet === false) {
                     $parent = Page::get()->byID($parent->ParentID);
                 }
             }
-            if($dataSet === false) {
+            if ($dataSet === false) {
                 $dataSet = $this->ChildrenShowInMenu(true);
             }
         }
+
         return $dataSet;
     }
 
-    function MyMenuItemsParentPage()
+    public function MyMenuItemsParentPage()
     {
         $children = $this->MyMenuItems();
-        if($children) {
-            if($child = $children->first()) {
+        if ($children) {
+            if ($child = $children->first()) {
                 $page = Page::get()->byID($child->ParentID);
-                if($page && $page->ShowInMenus && $page->canView()) {
+                if ($page && $page->ShowInMenus && $page->canView()) {
                     return $page;
                 }
             }
         }
     }
 
-    function MyMenuItemsParentLink()
+    public function MyMenuItemsParentLink()
     {
         $parent = $this->MyMenuItemsParentPage();
-        if($parent) {
+        if ($parent) {
             return $parent->MyMenuItemsMenuLink($parent->ParentID);
         }
         return $this->MyMenuItemsMenuLink(0);
     }
 
-    function MyMenuItemsMenuLink($id = null)
+    public function MyMenuItemsMenuLink($id = null)
     {
-        if($id === null) {
+        if ($id === null) {
             $id = $this->owner->ID;
         }
         return Controller::curr()->Link().'myspecificpagemenuitems/'.$id.'/';
     }
-
 }
