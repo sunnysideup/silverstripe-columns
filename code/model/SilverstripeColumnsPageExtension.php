@@ -243,8 +243,9 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 $dataSet = $this->ChildrenShowInMenu(true);
             }
         } else {
+            $isHomePage = $this->owner->URLSegment === Config::inst()->get('RootURLController', 'default_homepage_link');
             while ($parent && $dataSet === false) {
-                $dataSet = $parent->ChildrenShowInMenu();
+                $dataSet = $parent->ChildrenShowInMenu($isHomePage);
                 if ($dataSet->count() === 0) {
                     $dataSet = false;
                 }
