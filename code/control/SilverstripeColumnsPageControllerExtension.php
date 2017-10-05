@@ -135,7 +135,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         }
         if ($this->owner->ParentID) {
             $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => $this->owner->dataRecord->ParentID]);
-            $list->remove($this->owner);
+            $list = $list->exclude(['ID' => $this->owner->ID]);
 
             return $list;
         }

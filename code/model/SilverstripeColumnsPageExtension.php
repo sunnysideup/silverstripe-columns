@@ -207,14 +207,14 @@ class SilverstripeColumnsPageExtension extends DataExtension
                     $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => 0]);
                     foreach ($list as $page) {
                         if (! $page->canView()) {
-                            $list->remove($page);
+                            $list = $list->exclude(['ID' => $page->ID]);
                         }
                     }
                 } else {
                     $list = $this->owner->Children();
                     foreach ($list as $page) {
-                        if (! $page->ShowInMenus) {
-                            $list->remove($page);
+                        if (! $page->ShowInMenus ) {
+                            $list = $list->exclude(['ID' => $page->ID]);
                         }
                     }
                 }
