@@ -2,15 +2,15 @@
 
 namespace Sunnysideup\Columns\Model;
 
-use ArrayList;
-use Config;
-use Controller;
-use DataExtension;
-use FieldList;
-use HTMLEditorField;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Control\Controller;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use Page;
-use SiteTree;
-use UploadField;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\AssetAdmin\Forms\UploadField;
 
 /**
  *@author nicolaas [at] sunnysideup.co.nz
@@ -172,15 +172,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
-
-        /**
-         * ### @@@@ START REPLACEMENT @@@@ ###
-         * WHY: automated upgrade
-         * OLD: ->RenderWith( (ignore case)
-         * NEW: ->RenderWith( ...  (COMPLEX)
-         * EXP: Check that the template location is still valid!
-         * ### @@@@ STOP REPLACEMENT @@@@ ###
-         */
         return $this->owner->RenderWith('FullWidthContent');
     }
 
@@ -196,14 +187,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
             }
         }
 
-        /**
-         * ### @@@@ START REPLACEMENT @@@@ ###
-         * WHY: automated upgrade
-         * OLD: ->RenderWith( (ignore case)
-         * NEW: ->RenderWith( ...  (COMPLEX)
-         * EXP: Check that the template location is still valid!
-         * ### @@@@ STOP REPLACEMENT @@@@ ###
-         */
         return $this->owner->RenderWith('SummaryContent');
     }
 
@@ -267,15 +250,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 $dataSet = $this->ChildrenShowInMenu(true);
             }
         } else {
-
-            /**
-             * ### @@@@ START REPLACEMENT @@@@ ###
-             * WHY: automated upgrade
-             * OLD: Config::inst()->get('
-             * NEW: Config::inst()->get(' ...  (COMPLEX)
-             * EXP: Check if you should be using Name::class here instead of hard-coded class.
-             * ### @@@@ STOP REPLACEMENT @@@@ ###
-             */
             $isHomePage = $this->owner->URLSegment === Config::inst()->get('RootURLController', 'default_homepage_link');
             while ($parent && $dataSet === false) {
                 $dataSet = $parent->ChildrenShowInMenu($isHomePage);

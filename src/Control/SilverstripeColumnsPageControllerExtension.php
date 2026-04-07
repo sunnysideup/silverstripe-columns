@@ -2,8 +2,8 @@
 
 namespace Sunnysideup\Columns\Control;
 
-use ArrayData;
-use Extension;
+use SilverStripe\View\ArrayData;
+use SilverStripe\Core\Extension;
 use Page;
 
 /**
@@ -164,15 +164,6 @@ class SilverstripeColumnsPageControllerExtension extends Extension
                 'MyMenuItemsParentLink' => $this->owner->MyMenuItemsParentLink(),
             ]
         )
-
-            /**
-             * ### @@@@ START REPLACEMENT @@@@ ###
-             * WHY: automated upgrade
-             * OLD: ->RenderWith( (ignore case)
-             * NEW: ->RenderWith( ...  (COMPLEX)
-             * EXP: Check that the template location is still valid!
-             * ### @@@@ STOP REPLACEMENT @@@@ ###
-             */
             ->RenderWith('MyMenuItems');
     }
 
