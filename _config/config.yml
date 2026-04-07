@@ -3,7 +3,8 @@ name: columns
 Page:
   extensions:
     - SilverstripeColumnsPageExtension
-
 PageController:
   extensions:
     - SilverstripeColumnsPageControllerExtension
+---
+{  }

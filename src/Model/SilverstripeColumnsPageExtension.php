@@ -11,6 +11,8 @@ use SiteTree;
 use ArrayList;
 use Page;
 use Controller;
+use Sunnysideup\Columns\Model\SilverstripeColumnsPageExtension;
+
 
 
 /**
@@ -54,7 +56,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         $fieldLabels = $this->owner->FieldLabels();
-        $fieldLabelsRight = Config::inst()->get('SilverstripeColumnsPageExtension', 'field_labels_right');
+        $fieldLabelsRight = Config::inst()->get(SilverstripeColumnsPageExtension::class, 'field_labels_right');
         $tabTitleSummary = _t('SilverstripeColumnsPageExtension.SUMMARY_TAB', 'Summary');
         $tabTitleContent = _t('SilverstripeColumnsPageExtension.ADDITIONAL_CONTENT_TAB', 'MoreContent');
         if ($this->owner->UseSummaries()) {
