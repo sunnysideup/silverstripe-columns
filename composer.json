@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "silverstripe/recipe-cms": "^4.4"
+        "silverstripe/recipe-cms": "*"
     },
     "extra": {
         "installer-name": "columns"
