@@ -22,7 +22,5 @@
     "require": {
         "silverstripe/recipe-cms": "*"
     },
-    "extra": {
-        "installer-name": "columns"
-    }
+    "extra": []
 }
