@@ -4,6 +4,6 @@ Page:
   extensions:
     - SilverstripeColumnsPageExtension
 
-Page_Controller:
+PageController:
   extensions:
     - SilverstripeColumnsPageControllerExtension

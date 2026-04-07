@@ -163,7 +163,16 @@ class SilverstripeColumnsPageControllerExtension extends Extension
                 'MyMenuItemsParentLink' => $this->owner->MyMenuItemsParentLink()
             ]
         )
-        ->renderWith('MyMenuItems');
+
+/**
+  * ### @@@@ START REPLACEMENT @@@@ ###
+  * WHY: automated upgrade
+  * OLD: ->RenderWith( (ignore case)
+  * NEW: ->RenderWith( ...  (COMPLEX)
+  * EXP: Check that the template location is still valid!
+  * ### @@@@ STOP REPLACEMENT @@@@ ###
+  */
+        ->RenderWith('MyMenuItems');
     }
 
 

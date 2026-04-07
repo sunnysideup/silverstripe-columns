@@ -165,7 +165,16 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
-        return $this->owner->renderWith('FullWidthContent');
+
+/**
+  * ### @@@@ START REPLACEMENT @@@@ ###
+  * WHY: automated upgrade
+  * OLD: ->RenderWith( (ignore case)
+  * NEW: ->RenderWith( ...  (COMPLEX)
+  * EXP: Check that the template location is still valid!
+  * ### @@@@ STOP REPLACEMENT @@@@ ###
+  */
+        return $this->owner->RenderWith('FullWidthContent');
     }
 
     /**
@@ -180,7 +189,16 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
-        return $this->owner->renderWith('SummaryContent');
+
+/**
+  * ### @@@@ START REPLACEMENT @@@@ ###
+  * WHY: automated upgrade
+  * OLD: ->RenderWith( (ignore case)
+  * NEW: ->RenderWith( ...  (COMPLEX)
+  * EXP: Check that the template location is still valid!
+  * ### @@@@ STOP REPLACEMENT @@@@ ###
+  */
+        return $this->owner->RenderWith('SummaryContent');
     }
 
     private static $_children_show_in_menu = [];
@@ -243,6 +261,15 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 $dataSet = $this->ChildrenShowInMenu(true);
             }
         } else {
+
+/**
+  * ### @@@@ START REPLACEMENT @@@@ ###
+  * WHY: automated upgrade
+  * OLD: Config::inst()->get('
+  * NEW: Config::inst()->get(' ...  (COMPLEX)
+  * EXP: Check if you should be using Name::class here instead of hard-coded class.
+  * ### @@@@ STOP REPLACEMENT @@@@ ###
+  */
             $isHomePage = $this->owner->URLSegment === Config::inst()->get('RootURLController', 'default_homepage_link');
             while ($parent && $dataSet === false) {
                 $dataSet = $parent->ChildrenShowInMenu($isHomePage);
