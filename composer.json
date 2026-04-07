@@ -19,10 +19,7 @@
             "role": "lead developer"
         }
     ],
-    "require": {
-        "silverstripe/cms": "~3.6",
-        "silverstripe/framework": "~3.6"
-    },
+    "require": [],
     "extra": {
         "installer-name": "columns"
     }
