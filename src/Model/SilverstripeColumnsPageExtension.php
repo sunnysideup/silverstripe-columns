@@ -1,5 +1,17 @@
 <?php
 
+namespace Sunnysideup\Columns\Model;
+
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\Control\Controller;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use Page;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\AssetAdmin\Forms\UploadField;
+
 /**
  *@author nicolaas [at] sunnysideup.co.nz
  *
@@ -10,55 +22,55 @@ class SilverstripeColumnsPageExtension extends DataExtension
 {
     private static $db = [
         'Summary' => 'HTMLVarchar(255)',
-        'DefaultSidebarContent' => 'HTMLText'
+        'DefaultSidebarContent' => 'HTMLText',
     ];
 
     private static $has_one = [
         'SummaryImage' => 'Image',
-        'SidebarImage' => 'Image'
+        'SidebarImage' => 'Image',
     ];
 
     private static $casting = [
         'MyDefaultSidebarContent' => 'HTMLText',
         'FullWidthContent' => 'HTMLText',
-        'SummaryContent' => 'HTMLText'
+        'SummaryContent' => 'HTMLText',
     ];
 
     private static $field_labels = [
         'Summary' => 'Page Summary',
         'DefaultSidebarContent' => 'Sidebar content',
         'SummaryImage' => 'Image for Summaries',
-        'SidebarImage' => 'Sidebar Image'
+        'SidebarImage' => 'Sidebar Image',
     ];
 
     private static $field_labels_right = [
         'Summary' => 'A summary of the page for use on other pages.',
         'DefaultSidebarContent' => 'The sidebar show up to the right of the main content. It is usually for something like DID YOU KNOW? or CONTACT DETAILS.',
         'SummaryImage' => 'Image used to show a link to this page together with the summary of the page provided.',
-        'SidebarImage' => 'Image to show up in the sidebar instead of content.'
+        'SidebarImage' => 'Image to show up in the sidebar instead of content.',
     ];
 
     public function updateCMSFields(FieldList $fields)
     {
         $fieldLabels = $this->owner->FieldLabels();
-        $fieldLabelsRight = Config::inst()->get('SilverstripeColumnsPageExtension', 'field_labels_right');
+        $fieldLabelsRight = Config::inst()->get(SilverstripeColumnsPageExtension::class, 'field_labels_right');
         $tabTitleSummary = _t('SilverstripeColumnsPageExtension.SUMMARY_TAB', 'Summary');
         $tabTitleContent = _t('SilverstripeColumnsPageExtension.ADDITIONAL_CONTENT_TAB', 'MoreContent');
         if ($this->owner->UseSummaries()) {
             $fields->addFieldsToTab(
-            'Root.' . $tabTitleSummary,
-            [
-                HTMLEditorField::create(
-                    'Summary',
-                    $fieldLabels['Summary']
-                )->setRows(3)
-                ->setRightTitle($fieldLabelsRight['Summary']),
-                UploadField::create(
-                    'SummaryImage',
-                    $fieldLabels['SummaryImage']
-                )->setRightTitle($fieldLabelsRight['SummaryImage'])
-            ]
-        );
+                'Root.' . $tabTitleSummary,
+                [
+                    HTMLEditorField::create(
+                        'Summary',
+                        $fieldLabels['Summary']
+                    )->setRows(3)
+                        ->setRightTitle($fieldLabelsRight['Summary']),
+                    UploadField::create(
+                        'SummaryImage',
+                        $fieldLabels['SummaryImage']
+                    )->setRightTitle($fieldLabelsRight['SummaryImage']),
+                ]
+            );
         }
         if ($this->owner->UseDefaultSidebarContent()) {
             $fields->addFieldsToTab(
@@ -71,15 +83,13 @@ class SilverstripeColumnsPageExtension extends DataExtension
                     HTMLEditorField::create(
                         'DefaultSidebarContent',
                         $fieldLabels['DefaultSidebarContent']
-                    )->setRightTitle($fieldLabelsRight['DefaultSidebarContent'])
+                    )->setRightTitle($fieldLabelsRight['DefaultSidebarContent']),
                 ]
             );
         }
 
         return $fields;
     }
-
-
 
     /**
      * @return boolean
@@ -95,7 +105,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
         return false;
     }
-
 
     /**
      * @return boolean
@@ -139,7 +148,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
     }
 
     /**
-     *
      * @return string (HTML)
      */
     public function getMyDefaultSidebarContent()
@@ -154,7 +162,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
     }
 
     /**
-     *
      * @return string (HTML)
      */
     public function getFullWidthContent()
@@ -165,11 +172,10 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
-        return $this->owner->renderWith('FullWidthContent');
+        return $this->owner->RenderWith('FullWidthContent');
     }
 
     /**
-     *
      * @return string (HTML)
      */
     public function getSummaryContent()
@@ -180,12 +186,13 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
-        return $this->owner->renderWith('SummaryContent');
+
+        return $this->owner->RenderWith('SummaryContent');
     }
 
     private static $_children_show_in_menu = [];
 
-    private $showMenuItemsFor = null;
+    private $showMenuItemsFor;
 
     public function setShowMenuItemsFor($showMenuItemsFor)
     {
@@ -195,8 +202,8 @@ class SilverstripeColumnsPageExtension extends DataExtension
 
     public function ChildrenShowInMenu($root = false)
     {
-        $key = $this->owner->ID. '_'.($root ? 'true' : 'false');
-        if (!isset(self::$_children_show_in_menu[$key])) {
+        $key = $this->owner->ID . '_' . ($root ? 'true' : 'false');
+        if (! isset(self::$_children_show_in_menu[$key])) {
             if ($this->owner->hasMethod('ChildrenShowInMenuOverloaded')) {
                 $v = $this->owner->ChildrenShowInMenuOverloaded();
                 if ($v instanceof ArrayList) {
@@ -213,7 +220,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 } else {
                     $list = $this->owner->Children();
                     foreach ($list as $page) {
-                        if (! $page->ShowInMenus ) {
+                        if (! $page->ShowInMenus) {
                             $list = $list->exclude(['ID' => $page->ID]);
                         }
                     }
@@ -264,12 +271,10 @@ class SilverstripeColumnsPageExtension extends DataExtension
     public function MyMenuItemsParentPage()
     {
         $children = $this->MyMenuItems();
-        if ($children) {
-            if ($child = $children->first()) {
-                $page = Page::get()->byID($child->ParentID);
-                if ($page && $page->ShowInMenus && $page->canView()) {
-                    return $page;
-                }
+        if ($children && $child = $children->first()) {
+            $page = Page::get()->byID($child->ParentID);
+            if ($page && $page->ShowInMenus && $page->canView()) {
+                return $page;
             }
         }
     }
@@ -288,6 +293,6 @@ class SilverstripeColumnsPageExtension extends DataExtension
         if ($id === null) {
             $id = $this->owner->ID;
         }
-        return Controller::curr()->Link().'myspecificpagemenuitems/'.$id.'/';
+        return Controller::curr()->Link() . 'myspecificpagemenuitems/' . $id . '/';
     }
 }

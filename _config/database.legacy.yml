@@ -1,0 +1,4 @@
+SilverStripe\ORM\DatabaseAdmin:
+  classname_value_remapping:
+    SilverstripeColumnsPageControllerExtension: Sunnysideup\Columns\Control\SilverstripeColumnsPageControllerExtension
+    SilverstripeColumnsPageExtension: Sunnysideup\Columns\Model\SilverstripeColumnsPageExtension
