@@ -1,0 +1,3 @@
+mappings:
+  SilverstripeColumnsPageControllerExtension: Sunnysideup\Columns\Control\SilverstripeColumnsPageControllerExtension
+  SilverstripeColumnsPageExtension: Sunnysideup\Columns\Model\SilverstripeColumnsPageExtension

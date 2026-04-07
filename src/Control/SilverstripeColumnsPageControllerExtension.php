@@ -1,5 +1,12 @@
 <?php
 
+namespace Sunnysideup\Columns\Control;
+
+use Extension;
+use Page;
+use ArrayData;
+
+
 /**
  *@author nicolaas [at] sunnysideup.co.nz
  *

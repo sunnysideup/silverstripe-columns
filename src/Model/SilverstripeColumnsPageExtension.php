@@ -1,5 +1,18 @@
 <?php
 
+namespace Sunnysideup\Columns\Model;
+
+use DataExtension;
+use FieldList;
+use Config;
+use HTMLEditorField;
+use UploadField;
+use SiteTree;
+use ArrayList;
+use Page;
+use Controller;
+
+
 /**
  *@author nicolaas [at] sunnysideup.co.nz
  *
