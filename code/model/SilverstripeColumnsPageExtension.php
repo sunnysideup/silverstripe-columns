@@ -291,3 +291,4 @@ class SilverstripeColumnsPageExtension extends DataExtension
         return Controller::curr()->Link().'myspecificpagemenuitems/'.$id.'/';
     }
 }
+

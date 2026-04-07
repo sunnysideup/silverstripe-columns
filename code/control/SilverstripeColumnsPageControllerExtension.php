@@ -174,3 +174,4 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         return  $link === 'home' || $link = '/';
     }
 }
+
