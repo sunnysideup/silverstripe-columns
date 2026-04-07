@@ -2,10 +2,9 @@
 
 namespace Sunnysideup\Columns\Control;
 
+use ArrayData;
 use Extension;
 use Page;
-use ArrayData;
-
 
 /**
  *@author nicolaas [at] sunnysideup.co.nz
@@ -16,7 +15,7 @@ use ArrayData;
 class SilverstripeColumnsPageControllerExtension extends Extension
 {
     private static $allowed_actions = [
-        'myspecificpagemenuitems' => true
+        'myspecificpagemenuitems' => true,
     ];
 
     /**
@@ -67,26 +66,22 @@ class SilverstripeColumnsPageControllerExtension extends Extension
     {
         if ($this->owner->hasMethod('NumberOfColumnsOverloaded')) {
             return $this->owner->NumberOfColumnsOverloaded();
-            if ($v !== null) {
-                return $v;
-            }
         }
         $count = 1;
         if ($this->owner->HasSideBar()) {
             $count++;
         }
         if ($asClassName) {
-            $array = array(
+            $array = [
                 1 => 'one',
                 2 => 'two',
-                3 => 'three'
-            );
+                3 => 'three',
+            ];
             return $array[$count];
         } else {
             return $count;
         }
     }
-
 
     /**
      * returns a data list of items that have been edited last - up to one day ago.
@@ -103,12 +98,12 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         }
         return Page::get()
             ->filter(
-                array(
+                [
                     'ShowInSearch' => true,
-                    'LastEdited:LessThan' => date('Y-m-d h:i:s', time() - 86400)
-                )
+                    'LastEdited:LessThan' => date('Y-m-d h:i:s', time() - 86400),
+                ]
             )
-            ->sort(array('LastEdited' => 'DESC'))
+            ->sort(['LastEdited' => 'DESC'])
             ->limit($limit);
     }
 
@@ -142,9 +137,8 @@ class SilverstripeColumnsPageControllerExtension extends Extension
         }
         if ($this->owner->ParentID) {
             $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => $this->owner->dataRecord->ParentID]);
-            $list = $list->exclude(['ID' => $this->owner->ID]);
 
-            return $list;
+            return $list->exclude(['ID' => $this->owner->ID]);
         }
     }
 
@@ -167,27 +161,25 @@ class SilverstripeColumnsPageControllerExtension extends Extension
             [
                 'MyMenuItems' => $this->owner->MyMenuItems(),
                 'MyMenuItemsParentPage' => $this->owner->MyMenuItemsParentPage(),
-                'MyMenuItemsParentLink' => $this->owner->MyMenuItemsParentLink()
+                'MyMenuItemsParentLink' => $this->owner->MyMenuItemsParentLink(),
             ]
         )
 
-/**
-  * ### @@@@ START REPLACEMENT @@@@ ###
-  * WHY: automated upgrade
-  * OLD: ->RenderWith( (ignore case)
-  * NEW: ->RenderWith( ...  (COMPLEX)
-  * EXP: Check that the template location is still valid!
-  * ### @@@@ STOP REPLACEMENT @@@@ ###
-  */
-        ->RenderWith('MyMenuItems');
+            /**
+             * ### @@@@ START REPLACEMENT @@@@ ###
+             * WHY: automated upgrade
+             * OLD: ->RenderWith( (ignore case)
+             * NEW: ->RenderWith( ...  (COMPLEX)
+             * EXP: Check that the template location is still valid!
+             * ### @@@@ STOP REPLACEMENT @@@@ ###
+             */
+            ->RenderWith('MyMenuItems');
     }
-
 
     public function IsNotHome()
     {
         $link = $this->owner->Link();
 
-        return  $link === 'home' || $link = '/';
+        return $link === 'home' || $link = '/';
     }
 }
-
