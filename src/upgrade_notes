@@ -1,0 +1,109 @@
+2026-04-07 02:14
+
+# running php upgrade inspect see: https://github.com/silverstripe/silverstripe-upgrader
+cd /home/sdgm/projects/upgrades/upgradeto4
+php /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/bin/upgrade-code inspect /home/sdgm/projects/upgrades/upgradeto4/columns/src  --root-dir=/home/sdgm/projects/upgrades/upgradeto4 --write -vvv
+Array
+(
+    [0] => Composer detected issues in your platform:
+    [1] => 
+    [2] => Your Composer dependencies require a PHP version ">= 8.1.2". You are running 7.1.33-74+ubuntu22.04.1+deb.sury.org+1.
+    [3] => 
+    [4] => PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.2". You are running 7.1.33-74+ubuntu22.04.1+deb.sury.org+1. in /home/sdgm/projects/upgrades/upgradeto4/vendor/composer/platform_check.php on line 24
+)
+
+
+------------------------------------------------------------------------
+To continue, please use the following parameter: startFrom=InspectAPIChanges-1
+e.g. php runme.php startFrom=InspectAPIChanges-1
+------------------------------------------------------------------------
+            
+# running php upgrade inspect see: https://github.com/silverstripe/silverstripe-upgrader
+cd /home/sdgm/projects/upgrades/upgradeto4
+php /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/bin/upgrade-code inspect /home/sdgm/projects/upgrades/upgradeto4/columns/src  --root-dir=/home/sdgm/projects/upgrades/upgradeto4 --write -vvv
+Array
+(
+    [0] => Running post-upgrade on "/home/sdgm/projects/upgrades/upgradeto4/columns/src"
+    [1] => [2026-04-07 14:14:37] Applying ApiChangeWarningsRule to SilverstripeColumnsPageControllerExtension.php...
+    [2] => PHP Warning:  Undefined array key 265 in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Lexer.php on line 258
+    [3] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 190
+    [4] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 359
+    [5] => PHP Warning:  Undefined array key 265 in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Lexer.php on line 258
+    [6] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 190
+    [7] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 359
+    [8] => 
+    [9] => In ParserAbstract.php line 293:
+    [10] => 
+    [11] =>   [PhpParser\Error]
+    [12] =>   Syntax error, unexpected , expecting T_STRING or T_NS_SEPARATOR or '{' on line 3
+    [13] => 
+    [14] => 
+    [15] => Exception trace:
+    [16] =>   at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php:293
+    [17] =>  PhpParser\ParserAbstract->parse() at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Parser/Multiple.php:50
+    [18] =>  PhpParser\Parser\Multiple->tryParse() at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Parser/Multiple.php:31
+    [19] =>  PhpParser\Parser\Multiple->parse() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Util/MutableSource.php:45
+    [20] =>  SilverStripe\Upgrader\Util\MutableSource->__construct() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/UpgradeRule/PHP/ApiChangeWarningsRule.php:54
+    [21] =>  SilverStripe\Upgrader\UpgradeRule\PHP\ApiChangeWarningsRule->upgradeFile() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Upgrader.php:61
+    [22] =>  SilverStripe\Upgrader\Upgrader->upgrade() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Console/InspectCommand.php:88
+    [23] =>  SilverStripe\Upgrader\Console\InspectCommand->execute() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Command/Command.php:255
+    [24] =>  Symfony\Component\Console\Command\Command->run() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:1021
+    [25] =>  Symfony\Component\Console\Application->doRunCommand() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:275
+    [26] =>  Symfony\Component\Console\Application->doRun() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:149
+    [27] =>  Symfony\Component\Console\Application->run() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/bin/upgrade-code:55
+    [28] => 
+    [29] => inspect [-d|--root-dir ROOT-DIR] [-w|--write] [--skip-visibility] [--] <path>
+    [30] => 
+)
+
+
+------------------------------------------------------------------------
+To continue, please use the following parameter: startFrom=InspectAPIChanges-1
+e.g. php runme.php startFrom=InspectAPIChanges-1
+------------------------------------------------------------------------
+            
+# running php upgrade inspect see: https://github.com/silverstripe/silverstripe-upgrader
+cd /home/sdgm/projects/upgrades/upgradeto4
+php /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/bin/upgrade-code inspect /home/sdgm/projects/upgrades/upgradeto4/columns/src  --root-dir=/home/sdgm/projects/upgrades/upgradeto4 --write -vvv
+Array
+(
+    [0] => PHP Deprecated:  Nette\DI\Extensions\PhpExtension is deprecated, use Nette\Bootstrap\Extensions\PhpExtension. in /home/sdgm/projects/ss3upgrader/vendor/nette/di/src/DI/Extensions/PhpExtension.php on line 29
+    [1] => Running post-upgrade on "/home/sdgm/projects/upgrades/upgradeto4/columns/src"
+    [2] => [2026-04-07 02:15:11] Applying ApiChangeWarningsRule to SilverstripeColumnsPageControllerExtension.php...
+    [3] => PHP Warning:  Undefined array key 265 in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Lexer.php on line 258
+    [4] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 190
+    [5] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 359
+    [6] => PHP Warning:  Undefined array key 265 in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Lexer.php on line 258
+    [7] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 190
+    [8] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 359
+    [9] => 
+    [10] => In ParserAbstract.php line 293:
+    [11] => 
+    [12] =>   [PhpParser\Error]
+    [13] =>   Syntax error, unexpected , expecting T_STRING or T_NS_SEPARATOR or '{' on line 3
+    [14] => 
+    [15] => 
+    [16] => Exception trace:
+    [17] =>   at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php:293
+    [18] =>  PhpParser\ParserAbstract->parse() at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Parser/Multiple.php:50
+    [19] =>  PhpParser\Parser\Multiple->tryParse() at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Parser/Multiple.php:31
+    [20] =>  PhpParser\Parser\Multiple->parse() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Util/MutableSource.php:45
+    [21] =>  SilverStripe\Upgrader\Util\MutableSource->__construct() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/UpgradeRule/PHP/ApiChangeWarningsRule.php:54
+    [22] =>  SilverStripe\Upgrader\UpgradeRule\PHP\ApiChangeWarningsRule->upgradeFile() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Upgrader.php:61
+    [23] =>  SilverStripe\Upgrader\Upgrader->upgrade() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Console/InspectCommand.php:88
+    [24] =>  SilverStripe\Upgrader\Console\InspectCommand->execute() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Command/Command.php:255
+    [25] =>  Symfony\Component\Console\Command\Command->run() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:1021
+    [26] =>  Symfony\Component\Console\Application->doRunCommand() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:275
+    [27] =>  Symfony\Component\Console\Application->doRun() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:149
+    [28] =>  Symfony\Component\Console\Application->run() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/bin/upgrade-code:55
+    [29] => 
+    [30] => inspect [-d|--root-dir ROOT-DIR] [-w|--write] [--skip-visibility] [--] <path>
+    [31] => 
+)
+
+
+------------------------------------------------------------------------
+To continue, please use the following parameter: startFrom=InspectAPIChanges-1
+e.g. php runme.php startFrom=InspectAPIChanges-1
+------------------------------------------------------------------------
+            
