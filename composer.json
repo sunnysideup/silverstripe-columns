@@ -1,6 +1,6 @@
 {
     "name": "sunnysideup/columns",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "description": "Adds the ability to add several content columns.",
     "keywords": [
         "Silverstripe-CMS",
