@@ -107,3 +107,47 @@ To continue, please use the following parameter: startFrom=InspectAPIChanges-1
 e.g. php runme.php startFrom=InspectAPIChanges-1
 ------------------------------------------------------------------------
             
+# running php upgrade inspect see: https://github.com/silverstripe/silverstripe-upgrader
+cd /home/sdgm/projects/upgrades/upgradeto4
+php /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/bin/upgrade-code inspect /home/sdgm/projects/upgrades/upgradeto4/columns/src  --root-dir=/home/sdgm/projects/upgrades/upgradeto4 --write -vvv
+Array
+(
+    [0] => Running post-upgrade on "/home/sdgm/projects/upgrades/upgradeto4/columns/src"
+    [1] => [2026-04-07 14:25:43] Applying ApiChangeWarningsRule to SilverstripeColumnsPageControllerExtension.php...
+    [2] => PHP Warning:  Undefined array key 265 in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Lexer.php on line 258
+    [3] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 190
+    [4] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 359
+    [5] => PHP Warning:  Undefined array key 265 in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Lexer.php on line 258
+    [6] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 190
+    [7] => PHP Warning:  Undefined array key "" in /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php on line 359
+    [8] => 
+    [9] => In ParserAbstract.php line 293:
+    [10] => 
+    [11] =>   [PhpParser\Error]
+    [12] =>   Syntax error, unexpected , expecting T_STRING or T_NS_SEPARATOR or '{' on line 3
+    [13] => 
+    [14] => 
+    [15] => Exception trace:
+    [16] =>   at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/ParserAbstract.php:293
+    [17] =>  PhpParser\ParserAbstract->parse() at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Parser/Multiple.php:50
+    [18] =>  PhpParser\Parser\Multiple->tryParse() at /home/sdgm/projects/ss3upgrader/vendor/nikic/php-parser/lib/PhpParser/Parser/Multiple.php:31
+    [19] =>  PhpParser\Parser\Multiple->parse() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Util/MutableSource.php:45
+    [20] =>  SilverStripe\Upgrader\Util\MutableSource->__construct() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/UpgradeRule/PHP/ApiChangeWarningsRule.php:54
+    [21] =>  SilverStripe\Upgrader\UpgradeRule\PHP\ApiChangeWarningsRule->upgradeFile() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Upgrader.php:61
+    [22] =>  SilverStripe\Upgrader\Upgrader->upgrade() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/src/Console/InspectCommand.php:88
+    [23] =>  SilverStripe\Upgrader\Console\InspectCommand->execute() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Command/Command.php:255
+    [24] =>  Symfony\Component\Console\Command\Command->run() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:1021
+    [25] =>  Symfony\Component\Console\Application->doRunCommand() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:275
+    [26] =>  Symfony\Component\Console\Application->doRun() at /home/sdgm/projects/ss3upgrader/vendor/symfony/console/Application.php:149
+    [27] =>  Symfony\Component\Console\Application->run() at /home/sdgm/projects/ss3upgrader/vendor/silverstripe/upgrader/bin/upgrade-code:55
+    [28] => 
+    [29] => inspect [-d|--root-dir ROOT-DIR] [-w|--write] [--skip-visibility] [--] <path>
+    [30] => 
+)
+
+
+------------------------------------------------------------------------
+To continue, please use the following parameter: startFrom=InspectAPIChanges-2
+e.g. php runme.php startFrom=InspectAPIChanges-2
+------------------------------------------------------------------------
+            
