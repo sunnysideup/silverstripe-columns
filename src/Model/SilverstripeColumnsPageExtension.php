@@ -2,10 +2,10 @@
 
 namespace Sunnysideup\Columns\Model;
 
+use SilverStripe\Core\Extension;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Control\Controller;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use Page;
@@ -18,7 +18,7 @@ use SilverStripe\AssetAdmin\Forms\UploadField;
  *
  **/
 
-class SilverstripeColumnsPageExtension extends DataExtension
+class SilverstripeColumnsPageExtension extends Extension
 {
     private static $db = [
         'Summary' => 'HTMLVarchar(255)',
@@ -72,6 +72,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 ]
             );
         }
+
         if ($this->owner->UseDefaultSidebarContent()) {
             $fields->addFieldsToTab(
                 'Root.' . $tabTitleContent,
@@ -139,6 +140,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $image;
             }
         }
+
         $parent = $this->owner->Parent();
         if ($parent && $parent->exists() && $parent instanceof SiteTree) {
             return $parent->MySidebarImage();
@@ -158,6 +160,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
+
         return $this->owner->DefaultSidebarContent;
     }
 
@@ -172,6 +175,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
+
         return $this->owner->RenderWith('FullWidthContent');
     }
 
@@ -225,9 +229,11 @@ class SilverstripeColumnsPageExtension extends DataExtension
                         }
                     }
                 }
+
                 self::$_children_show_in_menu[$key] = $list;
             }
         }
+
         return self::$_children_show_in_menu[$key];
     }
 
@@ -239,6 +245,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 return $v;
             }
         }
+
         //first stop: children ...
         $parent = $this->owner;
         $dataSet = false;
@@ -256,10 +263,12 @@ class SilverstripeColumnsPageExtension extends DataExtension
                 if ($dataSet->count() === 0) {
                     $dataSet = false;
                 }
+
                 if ($dataSet === false) {
                     $parent = Page::get()->byID($parent->ParentID);
                 }
             }
+
             if ($dataSet === false) {
                 $dataSet = $this->ChildrenShowInMenu(true);
             }
@@ -285,6 +294,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
         if ($parent) {
             return $parent->MyMenuItemsMenuLink($parent->ParentID);
         }
+
         return $this->MyMenuItemsMenuLink(0);
     }
 
@@ -293,6 +303,7 @@ class SilverstripeColumnsPageExtension extends DataExtension
         if ($id === null) {
             $id = $this->owner->ID;
         }
+
         return Controller::curr()->Link() . 'myspecificpagemenuitems/' . $id . '/';
     }
 }
