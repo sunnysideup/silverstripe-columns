@@ -14,7 +14,7 @@
     <% if $HasSideBar %>
     <aside id="Sidebar" >
         <div class="typography content-padding">
-            <% include Sidebar %>
+            <% include Sunnysideup\Columns\IncludesSidebar %>
             <% if $MySidebarImage %>
                 <div id="MySidebarImage">
                     <img src="$MySidebarImage.Link" alt="$MySidebarImage.Title" />

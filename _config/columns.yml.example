@@ -1,4 +1,4 @@
-name: columns_mysite
+name: columns_app
 ---
 
 SilverstripeColumnsPageExtension:
