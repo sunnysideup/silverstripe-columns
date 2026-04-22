@@ -23,13 +23,14 @@ class SilverstripeColumnsPageControllerExtension extends Extension
      */
     public function HasFullWidthContent()
     {
-        if ($this->owner->hasMethod('HasFullWidthContentOverloaded')) {
-            $v = $this->owner->HasFullWidthContentOverloaded();
+        if ($this->getOwner()->hasMethod('HasFullWidthContentOverloaded')) {
+            $v = $this->getOwner()->HasFullWidthContentOverloaded();
             if ($v !== null) {
                 return $v;
             }
         }
-        if ($this->owner->owner->getFullWidthContent()) {
+
+        if ($this->getOwner()->owner->getFullWidthContent()) {
             return true;
         }
     }
@@ -39,19 +40,20 @@ class SilverstripeColumnsPageControllerExtension extends Extension
      */
     public function HasSideBar()
     {
-        if ($this->owner->hasMethod('HasSideBarOverloaded')) {
-            $v = $this->owner->HasSideBarOverloaded();
+        if ($this->getOwner()->hasMethod('HasSideBarOverloaded')) {
+            $v = $this->getOwner()->HasSideBarOverloaded();
             if ($v !== null) {
                 return $v;
             }
         }
+
         if (
             (
-                $this->owner->UseDefaultSideBarContent() &&
-                strlen($this->owner->getMyDefaultSidebarContent()) > 17
+                $this->getOwner()->UseDefaultSideBarContent() &&
+                strlen((string) $this->getOwner()->getMyDefaultSidebarContent()) > 17
             )
             ||
-            $this->owner->MySidebarImage()
+            $this->getOwner()->MySidebarImage()
         ) {
             return true;
         }
@@ -64,13 +66,15 @@ class SilverstripeColumnsPageControllerExtension extends Extension
      */
     public function NumberOfColumns($asClassName = true)
     {
-        if ($this->owner->hasMethod('NumberOfColumnsOverloaded')) {
-            return $this->owner->NumberOfColumnsOverloaded();
+        if ($this->getOwner()->hasMethod('NumberOfColumnsOverloaded')) {
+            return $this->getOwner()->NumberOfColumnsOverloaded();
         }
+
         $count = 1;
-        if ($this->owner->HasSideBar()) {
+        if ($this->getOwner()->HasSideBar()) {
             $count++;
         }
+
         if ($asClassName) {
             $array = [
                 1 => 'one',
@@ -90,12 +94,13 @@ class SilverstripeColumnsPageControllerExtension extends Extension
      */
     public function RecentlyUpdated($limit = 5)
     {
-        if ($this->owner->hasMethod('RecentlyUpdatedOverloaded')) {
-            $v = $this->owner->RecentlyUpdatedOverloaded();
+        if ($this->getOwner()->hasMethod('RecentlyUpdatedOverloaded')) {
+            $v = $this->getOwner()->RecentlyUpdatedOverloaded();
             if ($v !== null) {
                 return $v;
             }
         }
+
         return Page::get()
             ->filter(
                 [
@@ -113,14 +118,14 @@ class SilverstripeColumnsPageControllerExtension extends Extension
      */
     public function InThisSection()
     {
-        if ($this->owner->hasMethod('InThisSectionOverloaded')) {
-            $v = $this->owner->InThisSectionOverloaded();
+        if ($this->getOwner()->hasMethod('InThisSectionOverloaded')) {
+            $v = $this->getOwner()->InThisSectionOverloaded();
             if ($v !== null) {
                 return $v;
             }
         }
 
-        return $this->owner->ChildrenShowInMenu();
+        return $this->getOwner()->ChildrenShowInMenu();
     }
 
     /**
@@ -129,16 +134,17 @@ class SilverstripeColumnsPageControllerExtension extends Extension
      */
     public function AlsoSee()
     {
-        if ($this->owner->hasMethod('AlsoSeeOverloaded')) {
-            $v = $this->owner->AlsoSeeOverloaded();
+        if ($this->getOwner()->hasMethod('AlsoSeeOverloaded')) {
+            $v = $this->getOwner()->AlsoSeeOverloaded();
             if ($v !== null) {
                 return $v;
             }
         }
-        if ($this->owner->ParentID) {
-            $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => $this->owner->dataRecord->ParentID]);
 
-            return $list->exclude(['ID' => $this->owner->ID]);
+        if ($this->getOwner()->ParentID) {
+            $list = Page::get()->filter(['ShowInMenus' => 1, 'ParentID' => $this->getOwner()->dataRecord->ParentID]);
+
+            return $list->exclude(['ID' => $this->getOwner()->ID]);
         }
     }
 
@@ -149,19 +155,20 @@ class SilverstripeColumnsPageControllerExtension extends Extension
      */
     public function myspecificpagemenuitems($request)
     {
-        if ($this->owner->hasMethod('MySpecificPageMenuItemsOverloaded')) {
-            $v = $this->owner->MySpecificPageMenuItemsOverloaded();
+        if ($this->getOwner()->hasMethod('MySpecificPageMenuItemsOverloaded')) {
+            $v = $this->getOwner()->MySpecificPageMenuItemsOverloaded();
             if ($v !== null) {
                 return $v;
             }
         }
-        $id = intval($this->owner->request->param('ID'));
-        $this->owner->setShowMenuItemsFor($id);
+
+        $id = intval($this->getOwner()->request->param('ID'));
+        $this->getOwner()->setShowMenuItemsFor($id);
         return ArrayData::create(
             [
-                'MyMenuItems' => $this->owner->MyMenuItems(),
-                'MyMenuItemsParentPage' => $this->owner->MyMenuItemsParentPage(),
-                'MyMenuItemsParentLink' => $this->owner->MyMenuItemsParentLink(),
+                'MyMenuItems' => $this->getOwner()->MyMenuItems(),
+                'MyMenuItemsParentPage' => $this->getOwner()->MyMenuItemsParentPage(),
+                'MyMenuItemsParentLink' => $this->getOwner()->MyMenuItemsParentLink(),
             ]
         )
             ->RenderWith('MyMenuItems');
@@ -169,7 +176,7 @@ class SilverstripeColumnsPageControllerExtension extends Extension
 
     public function IsNotHome()
     {
-        $link = $this->owner->Link();
+        $link = $this->getOwner()->Link();
 
         return $link === 'home' || $link = '/';
     }
