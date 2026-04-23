@@ -2,7 +2,7 @@
 
 namespace Sunnysideup\Columns\Control;
 
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 use SilverStripe\Core\Extension;
 use Page;
 
