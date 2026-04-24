@@ -2,8 +2,8 @@
 
 namespace Sunnysideup\Columns\Model;
 
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\Core\Extension;
-use SilverStripe\ORM\ArrayList;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\FieldList;
